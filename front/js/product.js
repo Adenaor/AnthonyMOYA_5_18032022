@@ -2,7 +2,7 @@ const price = document.getElementById("price");
 const title = document.getElementById("title");
 const description = document.getElementById("description");
 const imageArticle = document.querySelector(".item__img");
-console.log(imageArticle);
+// console.log(imageArticle);
 
 // fonction asynchrone apparition info page produit
 
