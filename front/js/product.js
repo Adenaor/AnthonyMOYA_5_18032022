@@ -7,9 +7,7 @@ const colorArticle = document.querySelector("#colors");
 
 (async function () {
   const articleId = getArticleId();
-  //   console.log(articleId);
   const article = await getArticle(articleId);
-  // console.log(article);
   displayInfo(article);
 })();
 
@@ -25,7 +23,6 @@ function getArticle(articleId) {
       return res.json();
     })
     .then((article) => {
-      //   console.log(articles);
       return article;
     })
     .catch((error) => {
@@ -53,7 +50,6 @@ function displayInfo(article) {
 
   // Insertion des couleurs
   for (let colors of article.colors) {
-    // console.table(colors);
     colorsOption = document.createElement("option");
     colorArticle.appendChild(colorsOption);
     colorsOption.textContent = colors;
