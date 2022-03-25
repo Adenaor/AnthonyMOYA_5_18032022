@@ -2,8 +2,7 @@ const price = document.getElementById("price");
 const title = document.getElementById("title");
 const description = document.getElementById("description");
 const imageArticle = document.querySelector(".item__img");
-// console.log(imageArticle);
-
+const colorArticle = document.querySelector("#colors");
 // fonction asynchrone apparition info page produit
 
 (async function () {
@@ -51,4 +50,12 @@ function displayInfo(article) {
   // Insertion de la description
   description.textContent = `${article.description}`;
   // console.log(article);
+
+  // Insertion des couleurs
+  for (let colors of article.colors) {
+    // console.table(colors);
+    colorsOption = document.createElement("option");
+    colorArticle.appendChild(colorsOption);
+    colorsOption.textContent = colors;
+  }
 }
