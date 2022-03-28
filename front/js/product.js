@@ -2,10 +2,12 @@ const price = document.getElementById("price");
 const title = document.getElementById("title");
 const description = document.getElementById("description");
 const imageArticle = document.querySelector(".item__img");
-const colorArticle = document.querySelector("#colors");
+const articleColor = document.querySelector("#colors");
+const articleQuantity = document.getElementById("quantity");
+const addToCardBtn = document.querySelector("button");
 // fonction asynchrone apparition info page produit
 
-(async function () {
+(async () => {
   const articleId = getArticleId();
   const article = await getArticle(articleId);
   displayInfo(article);
@@ -39,19 +41,27 @@ function displayInfo(article) {
   imageArticle.innerHTML = `<img src=${article.imageUrl} alt=${article.altTxt} />`;
 
   // Insertion du titre
-  title.textContent = `${article.name}`;
+  title.textContent = article.name;
 
   // Insertion du prix
-  price.textContent = `${article.price}`;
+  price.textContent = article.price;
 
   // Insertion de la description
-  description.textContent = `${article.description}`;
+  description.textContent = article.description;
   // console.log(article);
 
-  // Insertion des couleurs
-  for (let colors of article.colors) {
+  // Insertion des couleursfor
+  for (let color of article.colors) {
     colorsOption = document.createElement("option");
-    colorArticle.appendChild(colorsOption);
-    colorsOption.textContent = colors;
+    articleColor.appendChild(colorsOption);
+    colorsOption.textContent = color;
   }
+}
+addToCard();
+function addToCard() {
+  addToCardBtn.addEventListener("click", () => {
+    if (articleQuantity.value > 100 && articleQuantity.value < 1) {
+      alert("error");
+    }
+  });
 }
