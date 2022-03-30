@@ -7,7 +7,7 @@ const articleQuantity = document.getElementById("quantity");
 const addToCardBtn = document.querySelector("button");
 const articleId = getArticleId();
 
-// fonction asynchrone apparition info page produit
+// ------- fonction asynchrone apparition info page produit ------------
 
 (async () => {
   articleId;
@@ -20,7 +20,7 @@ function getArticleId() {
   return new URL(location.href).searchParams.get("id");
 }
 
-// Retourne l'api d'un seul article
+// ---------------- Retourne l'api d'un seul article -------------------
 
 function getArticle(articleId) {
   return fetch(`http://localhost:3000/api/products/${articleId}`)
@@ -37,7 +37,7 @@ function getArticle(articleId) {
     });
 }
 
-// Ajoute les infos de l'article
+// ---------------- Ajoute les infos de l'article ---------------------
 
 function displayInfo(article) {
   // Insertion de l'image
@@ -71,7 +71,8 @@ function addToCard() {
       articleQuantity.value < 100 &&
       articleColor.value != ""
     ) {
-      // Article à ajouter au panier
+      //------------ Article à ajouter au panier-------------------
+
       let articleAdd = {
         id: articleId,
         price: price.textContent,
@@ -81,21 +82,38 @@ function addToCard() {
         img: imageArticle.innerHTML,
       };
 
-      console.log(articleAdd);
-
       alert("Cet article a été ajouté à votre panier.");
 
-      // Paramétrer le LocalStorage
+      // --------------- Gestion du LocalStorage -----------------
+      //  -------Stocker les données dans le local storage--------
+      const dataStorageAdd = () => {
+        dataStorage.push(articleAdd);
+        localStorage.data = JSON.stringify(dataStorage);
+      };
 
-      const dataStorage = [];
-
-      localStorage.articleData = JSON.stringify(articleAdd);
-
-      dataStorage.push(articleAdd);
-
+      let dataStorage = JSON.parse(localStorage.getItem("data"));
+      // Converti les données JSON stockées dans le localStorage en objet JS
       console.log(dataStorage);
+      // Si produits déjà présent dans le localStorage
+      if (dataStorage) {
+        // Si ID et couleur identique
+        dataStorageAdd();
+      }
+      // Si aucun produit enregistré dans le localStorage
+      else {
+        dataStorage = [];
+        dataStorageAdd();
+      }
     } else {
       alert("Attention, les informations saisies sont incorrectes.");
     }
   });
 }
+
+// let dataStorage = [];
+
+// // Panier vide
+
+// localStorage.articleData = JSON.stringify(articleAdd);
+// dataStorage.push(articleAdd);
+// console.log(dataStorage);// localStorage.articleData = JSON.parse(articleAdd);
