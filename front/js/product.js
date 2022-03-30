@@ -51,7 +51,6 @@ function displayInfo(article) {
 
   // Insertion de la description
   description.textContent = article.description;
-  // console.log(article);
 
   // Insertion des couleursfor
   for (let color of article.colors) {
@@ -91,13 +90,26 @@ function addToCard() {
       };
 
       let dataStorage = JSON.parse(localStorage.getItem("data"));
-      // Converti les données JSON stockées dans le localStorage en objet JS
-      console.log(dataStorage);
-      // Si produits déjà présent dans le localStorage
+
+      // Convertis les données JSON stockées dans le localStorage en objet JS
+      // console.log(dataStorage);
+      // Si produits déjà présents dans le localStorage
+
       if (dataStorage) {
         // Si ID et couleur identique
-        // Si nouveau produit
-        dataStorageAdd();
+        for (let i = 0; i < dataStorage.length; i++) {
+          if (
+            dataStorage[i].id == articleId &&
+            dataStorage[i].color == colorChoise
+          ) {
+            dataStorage[i].quantity =
+              parseInt(dataStorage[i].quantity) + parseInt(quantityChoise);
+          } // Si nouveau produit
+          else {
+            dataStorageAdd();
+          }
+        }
+        console.log(dataStorage);
       }
       // Si aucun produit enregistré dans le localStorage
       else {
