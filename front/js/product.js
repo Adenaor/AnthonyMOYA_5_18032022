@@ -60,6 +60,7 @@ function displayInfo(article) {
     colorsOption.textContent = color;
   }
 }
+//------------ Article à ajouter au panier-------------------
 
 function addToCard() {
   addToCardBtn.addEventListener("click", () => {
@@ -71,8 +72,6 @@ function addToCard() {
       articleQuantity.value < 100 &&
       articleColor.value != ""
     ) {
-      //------------ Article à ajouter au panier-------------------
-
       let articleAdd = {
         id: articleId,
         price: price.textContent,
@@ -97,6 +96,7 @@ function addToCard() {
       // Si produits déjà présent dans le localStorage
       if (dataStorage) {
         // Si ID et couleur identique
+        // Si nouveau produit
         dataStorageAdd();
       }
       // Si aucun produit enregistré dans le localStorage
@@ -109,11 +109,3 @@ function addToCard() {
     }
   });
 }
-
-// let dataStorage = [];
-
-// // Panier vide
-
-// localStorage.articleData = JSON.stringify(articleAdd);
-// dataStorage.push(articleAdd);
-// console.log(dataStorage);// localStorage.articleData = JSON.parse(articleAdd);
