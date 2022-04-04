@@ -2,6 +2,8 @@ dataStorage = JSON.parse(localStorage.getItem("data"));
 
 const cartItems = document.getElementById("cart__items");
 const deleteArticle = document.getElementsByClassName("deleteItem");
+const quantityBasket = document.getElementById("totalQuantity");
+const priceBasket = document.getElementById("totalPrice");
 
 // ------------------ Afficahge des produits du panier -----------------
 
@@ -57,10 +59,21 @@ if (dataStorage === null) {
   }
   cartItems.innerHTML = displayArticle;
 
-  // ----------------------- Supprimer les articles ----------------------------------
+  // ----------------------- Récupération quantité local storage ----------------------------------
 }
+let totalQuantity = 0;
+let totalPrice = 0;
 
 for (let article of dataStorage) {
-  console.log(article);
-  console.log(article.quantity);
+  quantity = article.quantity;
+  price = article.price;
+
+  let totalPriceArticle = Number(quantity) * Number(price);
+  // console.log(totalPriceArticle);
+
+  totalQuantity += Number(quantity);
+  totalPrice += Number(totalPriceArticle);
+  console.log(totalPrice);
 }
+quantityBasket.textContent = totalQuantity;
+priceBasket.textContent = totalPrice;
