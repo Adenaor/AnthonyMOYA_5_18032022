@@ -1,10 +1,11 @@
 const price = document.getElementById("price");
 const title = document.getElementById("title");
 const description = document.getElementById("description");
-const imageArticle = document.querySelector(".item__img");
+const itemImg = document.querySelector(".item__img");
 const articleColor = document.querySelector("#colors");
 const articleQuantity = document.getElementById("quantity");
 const addToCardBtn = document.querySelector("button");
+const imageArticle = document.createElement("img");
 const articleId = getArticleId();
 
 // ------- fonction asynchrone apparition info page produit ------------
@@ -41,7 +42,11 @@ function getArticle(articleId) {
 
 function displayInfo(article) {
   // Insertion de l'image
-  imageArticle.innerHTML = `<img src=${article.imageUrl} alt=${article.altTxt} />`;
+
+  itemImg.appendChild(imageArticle);
+
+  imageArticle.src = article.imageUrl;
+  imageArticle.altTxt = article.altTxt;
 
   // Insertion du titre
   title.textContent = article.name;
@@ -77,7 +82,8 @@ function addToCard() {
         title: title.textContent,
         quantity: quantityChoise,
         color: colorChoise,
-        img: imageArticle.innerHTML,
+        img: imageArticle.src,
+        alt: imageArticle.altTxt,
       };
 
       alert("Cet article a été ajouté à votre panier.");
@@ -91,27 +97,49 @@ function addToCard() {
 
       let dataStorage = JSON.parse(localStorage.getItem("data"));
 
-      // Convertis les données JSON stockées dans le localStorage en objet JS
-      // console.log(dataStorage);
-      // Si produits déjà présents dans le localStorage
-
-      if (dataStorage) {
-        // Si ID et couleur identique
-        for (let i = 0; i < dataStorage.length; i++) {
+      newQuantity = () => {
+        for (i = 0; i < dataStorage.length; i++) {
           if (
-            dataStorage[i].id == articleId &&
-            dataStorage[i].color == colorChoise
+            dataStorage[i].id === articleId &&
+            dataStorage[i].color === colorChoise
           ) {
             dataStorage[i].quantity =
               parseInt(dataStorage[i].quantity) + parseInt(quantityChoise);
-          } // Si nouveau produit
-          else {
-            dataStorageAdd();
+
+            localStorage.data = JSON.stringify(dataStorage);
           }
         }
+      };
+
+      let inCard = false;
+
+      searchInCard = () => {
+        for (j = 0; j < dataStorage.length; j++) {
+          if (
+            dataStorage[j].id === articleId &&
+            dataStorage[j].color === colorChoise
+          ) {
+            inCard = true;
+          }
+        }
+      };
+
+      //- Convertis les données JSON stockées dans le localStorage en objet JS -
+
+      //-------------  Si produits déjà présents dans le localStorage --------
+      if (dataStorage) {
+        searchInCard();
+        //----------------------- Si ID et couleur identique ------------------
+        if (inCard) {
+          newQuantity();
+          console.log(inCard);
+        } else {
+          dataStorageAdd();
+        }
         console.log(dataStorage);
+        //------------------------- Si nouveau produit ----------------------------
       }
-      // Si aucun produit enregistré dans le localStorage
+      //--------------- Si aucun produit enregistré dans le localStorage ---------
       else {
         dataStorage = [];
         dataStorageAdd();
