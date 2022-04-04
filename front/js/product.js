@@ -114,10 +114,10 @@ function addToCard() {
       let inCard = false;
 
       searchInCard = () => {
-        for (j = 0; j < dataStorage.length; j++) {
+        for (i = 0; i < dataStorage.length; i++) {
           if (
-            dataStorage[j].id === articleId &&
-            dataStorage[j].color === colorChoise
+            dataStorage[i].id === articleId &&
+            dataStorage[i].color === colorChoise
           ) {
             inCard = true;
           }

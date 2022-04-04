@@ -2,6 +2,7 @@ dataStorage = JSON.parse(localStorage.getItem("data"));
 
 const cartItems = document.getElementById("cart__items");
 const deleteArticle = document.getElementsByClassName("deleteItem");
+
 // ------------------ Afficahge des produits du panier -----------------
 
 // Si panier vide
@@ -55,6 +56,11 @@ if (dataStorage === null) {
     `;
   }
   cartItems.innerHTML = displayArticle;
+
+  // ----------------------- Supprimer les articles ----------------------------------
 }
 
-// ----------------------- Supprimer les articles ----------------------------------
+for (let article of dataStorage) {
+  console.log(article);
+  console.log(article.quantity);
+}
