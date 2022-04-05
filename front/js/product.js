@@ -104,7 +104,8 @@ function addToCard() {
             dataStorage[i].color === colorChoise
           ) {
             dataStorage[i].quantity =
-              parseInt(dataStorage[i].quantity) + parseInt(quantityChoise);
+              parseInt(dataStorage[i].quantity, 10) +
+              parseInt(quantityChoise, 10);
 
             localStorage.data = JSON.stringify(dataStorage);
           }

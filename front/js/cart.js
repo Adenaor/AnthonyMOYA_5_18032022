@@ -1,19 +1,20 @@
 dataStorage = JSON.parse(localStorage.getItem("data"));
 
 const cartItems = document.getElementById("cart__items");
-const deleteArticle = document.getElementsByClassName("deleteItem");
 const quantityBasket = document.getElementById("totalQuantity");
 const priceBasket = document.getElementById("totalPrice");
 
-// ------------------ Afficahge des produits du panier -----------------
+// --------------------- Afficahge des produits du panier -----------------------
 
-// Si panier vide
+// ---------------------- Si panier vide ----------------------------------------
 
 if (dataStorage === null) {
   cartItems.innerHTML = `<p>Votre panier est vide</p>`;
 } else {
   let displayArticle = [];
-  // Affichage des produits si le panier n'est pas vide
+
+  // --------- Affichage des produits si le panier n'est pas vide ---------------
+
   for (j = 0; j < dataStorage.length; j++) {
     // console.log("il y a " + dataStorage.length + " articles");
     displayArticle =
@@ -58,22 +59,68 @@ if (dataStorage === null) {
     `;
   }
   cartItems.innerHTML = displayArticle;
-
-  // ----------------------- Récupération quantité local storage ----------------------------------
 }
+
+// ---------- Récupération de la quantité et du prix dans le local storage ----------
+
 let totalQuantity = 0;
 let totalPrice = 0;
 
 for (let article of dataStorage) {
   quantity = article.quantity;
-  price = article.price;
-
-  let totalPriceArticle = Number(quantity) * Number(price);
-  // console.log(totalPriceArticle);
+  price = Number(quantity) * Number(article.price);
 
   totalQuantity += Number(quantity);
-  totalPrice += Number(totalPriceArticle);
-  console.log(totalPrice);
+  totalPrice += Number(price);
+  // console.log(totalPrice);
+
+  quantityBasket.textContent = totalQuantity;
+  priceBasket.textContent = totalPrice;
+
+  // ------------------------- Modifier la quantité et du prix---------------------------------
 }
-quantityBasket.textContent = totalQuantity;
-priceBasket.textContent = totalPrice;
+for (let k = 0; k < dataStorage.length; k++) {
+  // -------------  Modifier quantité -----------
+
+  document
+    .querySelectorAll(".itemQuantity")
+    [k].addEventListener("change", (e) => {
+      let newQuantity = e.target.value;
+      let newTotalQuantity = totalQuantity;
+      let newTotalPrice = totalPrice;
+
+      dataStorage[k].quantity = newQuantity;
+      // console.log(dataStorage[k].quantity);
+
+      localStorage.data = JSON.stringify(dataStorage);
+
+      // ------------- Modification prix --------------
+
+      // let newPrice =
+      //   Number(dataStorage[k].quantity) * Number(dataStorage[k].price);
+      // console.log(newPrice);
+
+      // newTotalPrice += newPrice;
+      // newTotalQuantity += Number(dataStorage[k].quantity);
+      // console.log(newTotalQuantity);
+      // quantityBasket.textContent = newTotalQuantity;
+      // priceBasket.textContent = newTotalPrice;
+    });
+}
+
+// ---------------------- Gérer bouton supprimer -------------
+
+let deleteItem = document.querySelectorAll(".deleteItem");
+
+deleteItem.forEach((removeItem) => {
+  removeItem.addEventListener("click", () => {
+    console.log("click");
+
+    if (
+      window.confirm(
+        `Voulez-vous retirer cet article du panier ? Cliquer sur OK pour confirmer`
+      )
+    ) {
+    }
+  });
+});
