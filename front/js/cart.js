@@ -76,51 +76,52 @@ for (let article of dataStorage) {
 
   quantityBasket.textContent = totalQuantity;
   priceBasket.textContent = totalPrice;
-
-  // ------------------------- Modifier la quantité et du prix---------------------------------
 }
+// ------------------------- Modifier la quantité et du prix---------------------------------
+
+const itemQuantity = document.querySelectorAll(".itemQuantity");
+
+// -------------  Modifier quantité -----------
+
 for (let k = 0; k < dataStorage.length; k++) {
-  // -------------  Modifier quantité -----------
+  itemQuantity[k].addEventListener("change", (e) => {
+    let newQuantity = e.target.value;
+    let newTotalQuantity = totalQuantity;
+    let newTotalPrice = totalPrice;
 
-  document
-    .querySelectorAll(".itemQuantity")
-    [k].addEventListener("change", (e) => {
-      let newQuantity = e.target.value;
-      let newTotalQuantity = totalQuantity;
-      let newTotalPrice = totalPrice;
+    dataStorage[k].quantity = newQuantity;
+    // console.log(dataStorage[k].quantity);
 
-      dataStorage[k].quantity = newQuantity;
-      // console.log(dataStorage[k].quantity);
+    localStorage.data = JSON.stringify(dataStorage);
 
-      localStorage.data = JSON.stringify(dataStorage);
+    // ------------- Modification prix --------------
 
-      // ------------- Modification prix --------------
+    // let newPrice =
+    //   Number(dataStorage[k].quantity) * Number(dataStorage[k].price);
+    // console.log(newPrice);
 
-      // let newPrice =
-      //   Number(dataStorage[k].quantity) * Number(dataStorage[k].price);
-      // console.log(newPrice);
-
-      // newTotalPrice += newPrice;
-      // newTotalQuantity += Number(dataStorage[k].quantity);
-      // console.log(newTotalQuantity);
-      // quantityBasket.textContent = newTotalQuantity;
-      // priceBasket.textContent = newTotalPrice;
-    });
+    // newTotalPrice += newPrice;
+    // newTotalQuantity += Number(dataStorage[k].quantity);
+    // console.log(newTotalQuantity);
+    // quantityBasket.textContent = newTotalQuantity;
+    // priceBasket.textContent = newTotalPrice;
+  });
 }
 
 // ---------------------- Gérer bouton supprimer -------------
 
-let deleteItem = document.querySelectorAll(".deleteItem");
+const deleteItem = document.querySelectorAll(".deleteItem");
 
-deleteItem.forEach((removeItem) => {
-  removeItem.addEventListener("click", () => {
-    console.log("click");
+deleteItem.forEach((deleteBtn) => {
+  deleteBtn.addEventListener("click", (e) => {
+    let deleteClicked = e.target;
 
     if (
       window.confirm(
         `Voulez-vous retirer cet article du panier ? Cliquer sur OK pour confirmer`
       )
     ) {
+      deleteClicked.parentElement.parentElement.parentElement.parentElement.remove();
     }
   });
 });
