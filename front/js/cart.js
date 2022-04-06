@@ -81,7 +81,7 @@ for (let article of dataStorage) {
 
 const itemQuantity = document.querySelectorAll(".itemQuantity");
 
-// -------------  Modifier quantité -----------
+// // -------------  Modifier quantité -----------
 
 for (let k = 0; k < dataStorage.length; k++) {
   itemQuantity[k].addEventListener("change", (e) => {
@@ -122,6 +122,7 @@ deleteItem.forEach((deleteBtn) => {
       )
     ) {
       deleteClicked.parentElement.parentElement.parentElement.parentElement.remove();
+      localStorage.data = JSON.stringify(dataStorage);
     }
   });
 });
