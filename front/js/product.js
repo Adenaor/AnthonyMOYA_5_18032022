@@ -90,6 +90,7 @@ function addToCard() {
 
       // --------------- Gestion du LocalStorage -----------------
       //  -------Stocker les données dans le local storage--------
+
       const dataStorageAdd = () => {
         dataStorage.push(articleAdd);
         localStorage.data = JSON.stringify(dataStorage);
@@ -133,11 +134,11 @@ function addToCard() {
         //----------------------- Si ID et couleur identique ------------------
         if (inCard) {
           newQuantity();
-          console.log(inCard);
+          // console.log(inCard);
         } else {
           dataStorageAdd();
         }
-        console.log(dataStorage);
+        // console.log(dataStorage);
         //------------------------- Si nouveau produit ----------------------------
       }
       //--------------- Si aucun produit enregistré dans le localStorage ---------
