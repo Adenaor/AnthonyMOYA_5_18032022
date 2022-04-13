@@ -188,17 +188,16 @@ const validFirstName = function (inputFirstName) {
 };
 
 // ------------------------------- Validation du nom ------------------------------
+
 form.lastName.addEventListener("change", function () {
   validLastName(this);
-
-  console.log(form.lasttName);
 });
 
 const validLastName = function (inputLasttName) {
   // création de la Regexp pour la validation du nom
 
   let nameRegExp =
-    /^[a-zA-ZéèêÉÈÊËîïÎÏ][a-zéèêëàäçïî]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][a-zéèêëàäçïî]+)?/;
+    /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][a-zéèêëàäçïî]+)?/;
 
   let testLastName = nameRegExp.test(inputLasttName.value);
   let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
@@ -210,7 +209,8 @@ const validLastName = function (inputLasttName) {
   }
 };
 
-// ------------------------------- Validation de l'adresse------------------------------
+// ------------------------------- Validation de l'adresse ------------------------------
+
 form.address.addEventListener("change", function () {
   validAddress(this);
 });
@@ -230,7 +230,7 @@ const validAddress = function (inputAddress) {
   }
 };
 
-// ------------------------------- Validation de la ville------------------------------
+// ------------------------------- Validation de la ville -------------------------------
 
 form.city.addEventListener("change", function () {
   validCity(this);
@@ -250,7 +250,8 @@ const validCity = function (inputCity) {
     cityErrorMsg.textContent = "Attention la ville saisie n'est pas valide";
   }
 };
-// -------------------- Validation de l'email ---------------------------------------------
+
+// ----------------------------- Validation de l'email ---------------------------------------------
 
 form.email.addEventListener("change", function () {
   validEmail(this);
@@ -259,7 +260,7 @@ form.email.addEventListener("change", function () {
 const validEmail = function (inputEmail) {
   // création de la Regexp pour la validation email
 
-  let emailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  let emailRegExp = /^[\w-\.]+@([\w-]+\.)+[a-z]{2,4}$/g;
   let testEmail = emailRegExp.test(inputEmail.value);
   let emailErrorMsg = document.getElementById("emailErrorMsg");
 
@@ -270,9 +271,62 @@ const validEmail = function (inputEmail) {
   }
 };
 
-// const orderBtn = document.getElementById("order");
-// orderBtn.addEventListener("click", (e) => submitForm(e));
+// -------------------------- Envoie du formulaire au serveur ------------------------------
 
-// function submitForm(e) {
-//   e.preventDefault();
-// }
+submitForm();
+
+function submitForm() {
+  const orderBtn = document.getElementById("order");
+
+  orderBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (items === null || items.length === 0)
+      alert("Veuillez ajouter un article dans votre panier");
+
+    const order = requestContact();
+
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      body: JSON.stringify(order),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const orderId = data.orderId;
+        window.location.href = `./confirmation.html?orderId=${orderId}`;
+        localStorage.removeItem("data");
+      })
+      .catch((error) => {
+        alert("Un problème est survenu");
+      });
+  });
+}
+
+function requestContact() {
+  let inputFirstName = document.getElementById("firstName");
+  let inputLastName = document.getElementById("lastName");
+  let inputAddress = document.getElementById("address");
+  let inputCity = document.getElementById("city");
+  let inputEmail = document.getElementById("email");
+
+  const productsId = [];
+  for (item of items) {
+    productsId.push(item.id);
+  }
+
+  const order = {
+    contact: {
+      firstName: inputFirstName.value,
+      lastName: inputLastName.value,
+      address: inputAddress.value,
+      city: inputCity.value,
+      email: inputEmail.value,
+    },
+    products: productsId,
+  };
+
+  return order;
+}
