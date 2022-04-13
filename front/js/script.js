@@ -4,7 +4,6 @@ const items = document.getElementById("items");
 
 (async function () {
   const articles = await getArticles();
-  //   console.log(articles);
   for (let article of articles) {
     displayArticle(article);
   }
@@ -18,7 +17,6 @@ function getArticles() {
       return res.json();
     })
     .then((articles) => {
-      //   console.log(articles);
       return articles;
     })
     .catch((error) => {

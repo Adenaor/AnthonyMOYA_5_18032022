@@ -134,11 +134,10 @@ function addToCard() {
         //----------------------- Si ID et couleur identique ------------------
         if (inCard) {
           newQuantity();
-          // console.log(inCard);
         } else {
           dataStorageAdd();
         }
-        // console.log(dataStorage);
+
         //------------------------- Si nouveau produit ----------------------------
       }
       //--------------- Si aucun produit enregistré dans le localStorage ---------
