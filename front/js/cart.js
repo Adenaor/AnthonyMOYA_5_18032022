@@ -288,26 +288,23 @@ function submitForm() {
       alert("Veuillez ajouter un article dans votre panier");
     else {
       const order = requestContact();
-      postOrder();
 
-      function postOrder() {
-        fetch("http://localhost:3000/api/products/order", {
-          method: "POST",
-          body: JSON.stringify(order),
-          headers: {
-            "Content-Type": "application/json",
-          },
+      fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const orderId = data.orderId;
+          window.location.href = `./confirmation.html?orderId=${orderId}`;
+          localStorage.removeItem("data");
         })
-          .then((res) => res.json())
-          .then((data) => {
-            const orderId = data.orderId;
-            window.location.href = `./confirmation.html?orderId=${orderId}`;
-            localStorage.removeItem("data");
-          })
-          .catch((error) => {
-            alert("Un problème est survenu");
-          });
-      }
+        .catch((error) => {
+          alert("Un problème est survenu");
+        });
     }
   });
 }
