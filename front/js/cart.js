@@ -64,6 +64,11 @@ function emptyCart() {
 }
 
 // ---------- Récupération de la quantité et du prix dans le local storage ----------
+if (localStorage.length === 0 || items.length === 0) {
+  emptyCart();
+} else {
+  displayQuantityAndPrice();
+}
 
 function displayQuantityAndPrice() {
   let totalQuantity = 0;
@@ -80,8 +85,6 @@ function displayQuantityAndPrice() {
     priceBasket.textContent = totalPrice;
   }
 }
-
-displayQuantityAndPrice();
 
 // ------------------------- Modifier la quantité et du prix ---------------------------------
 
@@ -116,7 +119,7 @@ function editQuantity(e) {
 
 const deleteItem = document.querySelectorAll(".deleteItem");
 
-if (items.length === 0) {
+if (localStorage.length === 0) {
   emptyCart();
 } else {
   for (k = 0; k < deleteItem.length; k++) {
@@ -281,27 +284,31 @@ function submitForm() {
   orderBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    if (items === null || items.length === 0)
+    if (localStorage.length === 0 || items.length === 0)
       alert("Veuillez ajouter un article dans votre panier");
+    else {
+      const order = requestContact();
+      postOrder();
+    }
 
-    const order = requestContact();
-
-    fetch("http://localhost:3000/api/products/order", {
-      method: "POST",
-      body: JSON.stringify(order),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const orderId = data.orderId;
-        window.location.href = `./confirmation.html?orderId=${orderId}`;
-        localStorage.removeItem("data");
+    function postOrder() {
+      fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        alert("Un problème est survenu");
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          const orderId = data.orderId;
+          window.location.href = `./confirmation.html?orderId=${orderId}`;
+          localStorage.removeItem("data");
+        })
+        .catch((error) => {
+          alert("Un problème est survenu");
+        });
+    }
   });
 }
 
