@@ -172,6 +172,7 @@ let inputAddress = document.getElementById("address");
 let inputCity = document.getElementById("city");
 let inputEmail = document.getElementById("email");
 
+let errorCount = 0;
 // ------------------------------- Validation de prénom ------------------------------
 
 validForm();
@@ -184,17 +185,18 @@ function validForm() {
   const validFirstName = function (inputFirstName) {
     // création de la Regexp pour la validation du prénom
 
-    let nameRegExp =
-      /^[a-zA-ZéèêÉÈÊËîïÎÏ]+[^0-9]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][^0-9]+)?$/;
+    let nameRegExp = /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ])?$/;
 
     let testFirstName = nameRegExp.test(inputFirstName.value);
     let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
 
     if (testFirstName) {
       firstNameErrorMsg.textContent = "";
+      errorCount;
     } else {
       firstNameErrorMsg.textContent =
         "Attention le prénom saisi n'est pas valide";
+      errorCount++;
     }
   };
 
@@ -207,8 +209,7 @@ function validForm() {
   const validLastName = function (inputLasttName) {
     // création de la Regexp pour la validation du nom
 
-    let nameRegExp =
-      /^[a-zA-ZéèêÉÈÊËîïÎÏ]+[^0-9]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][^0-9]+)?$/;
+    let nameRegExp = /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ]+)?$/;
 
     let testLastName = nameRegExp.test(inputLasttName.value);
     let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
@@ -217,6 +218,7 @@ function validForm() {
       lastNameErrorMsg.textContent = "";
     } else {
       lastNameErrorMsg.textContent = "Attention le nom saisi n'est pas valide";
+      errorCount++;
     }
   };
 
@@ -239,6 +241,7 @@ function validForm() {
     } else {
       addressErrorMsg.textContent =
         "Attention l'adresse saisie n'est pas valide";
+      errorCount++;
     }
   };
 
@@ -260,6 +263,7 @@ function validForm() {
       cityErrorMsg.textContent = "";
     } else {
       cityErrorMsg.textContent = "Attention la ville saisie n'est pas valide";
+      errorCount++;
     }
   };
 
@@ -280,6 +284,7 @@ function validForm() {
       emailErrorMsg.textContent = "";
     } else {
       emailErrorMsg.textContent = "Attention l'email n'est pas valide";
+      errorCount++;
     }
   };
 }
@@ -317,14 +322,15 @@ function submitForm() {
         .then((res) => res.json())
         .then((data) => {
           const orderId = data.orderId;
-          window.location.href = `./confirmation.html?orderId=${orderId}`;
-          localStorage.removeItem("data");
+          // window.location.href = `./confirmation.html?orderId=${orderId}`;
+          // localStorage.removeItem("data");
         })
         .catch((error) => {
           alert("Un problème est survenu");
         });
     }
   });
+  console.log(errorCount);
 }
 
 function requestContact() {
