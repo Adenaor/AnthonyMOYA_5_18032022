@@ -1,3 +1,5 @@
+// Récupération du numéro de commande
+
 function getOrderId() {
   return new URL(location.href).searchParams.get("orderId");
 }
