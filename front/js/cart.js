@@ -185,7 +185,7 @@ function validForm() {
     // création de la Regexp pour la validation du prénom
 
     let nameRegExp =
-      /^[a-zA-ZéèêÉÈÊËîïÎÏ][a-zéèêëàäçïî]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][a-zéèêëàäçïî]+)?/;
+      /^[a-zA-ZéèêÉÈÊËîïÎÏ]+[^0-9]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][^0-9]+)?$/;
 
     let testFirstName = nameRegExp.test(inputFirstName.value);
     let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
@@ -208,7 +208,7 @@ function validForm() {
     // création de la Regexp pour la validation du nom
 
     let nameRegExp =
-      /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][a-zéèêëàäçïî]+)?/;
+      /^[a-zA-ZéèêÉÈÊËîïÎÏ]+[^0-9]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ][^0-9]+)?$/;
 
     let testLastName = nameRegExp.test(inputLasttName.value);
     let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
@@ -251,7 +251,7 @@ function validForm() {
   const validCity = function (inputCity) {
     // création de la Regexp pour la validation de la ville
 
-    let cityRegExp = /^[a-zA-ZéèêÉÈÊËçîïÎÏ'\s]+/;
+    let cityRegExp = /^[a-zA-ZéèêÉÈÊËçîïÎÏ'\s]+$/;
 
     let testCity = cityRegExp.test(inputCity.value);
     let cityErrorMsg = document.getElementById("cityErrorMsg");
@@ -294,16 +294,16 @@ function submitForm() {
   orderBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    if (localStorage.length === 0 || items.length === 0)
+    if (localStorage.length === 0 || items.length === 0) {
       alert("Veuillez ajouter un article dans votre panier");
-    if (
+    } else if (
       !inputFirstName.value ||
       !inputLastName.value ||
       !inputAddress.value ||
       !inputCity.value ||
       !inputEmail.value
     ) {
-      alert("Veuillez remplir tous les champs");
+      alert("Veuillez remplir tous les champs du formulaire");
     } else {
       const order = requestContact();
 
