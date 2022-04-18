@@ -172,122 +172,116 @@ let inputAddress = document.getElementById("address");
 let inputCity = document.getElementById("city");
 let inputEmail = document.getElementById("email");
 
-let errorCount = 0;
 // ------------------------------- Validation de prénom ------------------------------
 
-validForm();
+inputFirstName.addEventListener("change", function () {
+  validFirstName(this);
+});
 
-function validForm() {
-  inputFirstName.addEventListener("change", function () {
-    validFirstName(this);
-  });
+const validFirstName = function (inputFirstName) {
+  // création de la Regexp pour la validation du prénom
 
-  const validFirstName = function (inputFirstName) {
-    // création de la Regexp pour la validation du prénom
+  let nameRegExp = /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ])?$/;
 
-    let nameRegExp = /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ])?$/;
+  let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
 
-    let testFirstName = nameRegExp.test(inputFirstName.value);
-    let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+  if (nameRegExp.test(inputFirstName.value)) {
+    firstNameErrorMsg.textContent = "";
+    return true;
+  } else {
+    firstNameErrorMsg.textContent =
+      "Attention le prénom saisi n'est pas valide";
+    return false;
+  }
+};
 
-    if (testFirstName) {
-      firstNameErrorMsg.textContent = "";
-      errorCount;
-    } else {
-      firstNameErrorMsg.textContent =
-        "Attention le prénom saisi n'est pas valide";
-      errorCount++;
-    }
-  };
+// ------------------------------- Validation du nom ------------------------------
 
-  // ------------------------------- Validation du nom ------------------------------
+inputLastName.addEventListener("change", function () {
+  validLastName(this);
+});
 
-  inputLastName.addEventListener("change", function () {
-    validLastName(this);
-  });
+const validLastName = function (inputLasttName) {
+  // création de la Regexp pour la validation du nom
 
-  const validLastName = function (inputLasttName) {
-    // création de la Regexp pour la validation du nom
+  let nameRegExp = /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ]+)?$/;
 
-    let nameRegExp = /^[a-zA-ZéèêÉÈÊËîïÎÏ]+([-'\s][a-zA-ZéèêÉÈÊËîïÎÏ]+)?$/;
+  let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
 
-    let testLastName = nameRegExp.test(inputLasttName.value);
-    let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+  if (nameRegExp.test(inputLasttName.value)) {
+    lastNameErrorMsg.textContent = "";
+    return true;
+  } else {
+    lastNameErrorMsg.textContent = "Attention le nom saisi n'est pas valide";
+    return false;
+  }
+};
 
-    if (testLastName) {
-      lastNameErrorMsg.textContent = "";
-    } else {
-      lastNameErrorMsg.textContent = "Attention le nom saisi n'est pas valide";
-      errorCount++;
-    }
-  };
+// ------------------------------- Validation de l'adresse ------------------------------
 
-  // ------------------------------- Validation de l'adresse ------------------------------
+inputAddress.addEventListener("change", function () {
+  validAddress(this);
+});
 
-  inputAddress.addEventListener("change", function () {
-    validAddress(this);
-  });
+const validAddress = function (inputAddress) {
+  // création de la Regexp pour la validation de l'adresse
 
-  const validAddress = function (inputAddress) {
-    // création de la Regexp pour la validation de l'adresse
+  let addressRegExp = /^[0-9*]{1,3}[-'\s]+[a-zA-Zéèêëàäçïî]+/;
 
-    let addressRegExp = /^[0-9*]{1,3}[-'\s]+[a-zA-Zéèêëàäçïî]+/;
+  let addressErrorMsg = document.getElementById("addressErrorMsg");
 
-    let testAddress = addressRegExp.test(inputAddress.value);
-    let addressErrorMsg = document.getElementById("addressErrorMsg");
+  if (addressRegExp.test(inputAddress.value)) {
+    addressErrorMsg.textContent = "";
+    return true;
+  } else {
+    addressErrorMsg.textContent = "Attention l'adresse saisie n'est pas valide";
+    return false;
+  }
+};
 
-    if (testAddress) {
-      addressErrorMsg.textContent = "";
-    } else {
-      addressErrorMsg.textContent =
-        "Attention l'adresse saisie n'est pas valide";
-      errorCount++;
-    }
-  };
+// ------------------------------- Validation de la ville -------------------------------
 
-  // ------------------------------- Validation de la ville -------------------------------
+inputCity.addEventListener("change", function () {
+  validCity(this);
+});
 
-  inputCity.addEventListener("change", function () {
-    validCity(this);
-  });
+const validCity = function (inputCity) {
+  // création de la Regexp pour la validation de la ville
 
-  const validCity = function (inputCity) {
-    // création de la Regexp pour la validation de la ville
+  let cityRegExp = /^[a-zA-ZéèêÉÈÊËçîïÎÏ'\s]+$/;
 
-    let cityRegExp = /^[a-zA-ZéèêÉÈÊËçîïÎÏ'\s]+$/;
+  let cityErrorMsg = document.getElementById("cityErrorMsg");
 
-    let testCity = cityRegExp.test(inputCity.value);
-    let cityErrorMsg = document.getElementById("cityErrorMsg");
+  if (cityRegExp.test(inputCity.value)) {
+    cityErrorMsg.textContent = "";
+    return true;
+  } else {
+    cityErrorMsg.textContent = "Attention la ville saisie n'est pas valide";
+    return false;
+  }
+};
 
-    if (testCity) {
-      cityErrorMsg.textContent = "";
-    } else {
-      cityErrorMsg.textContent = "Attention la ville saisie n'est pas valide";
-      errorCount++;
-    }
-  };
+// ----------------------------- Validation de l'email ---------------------------------------------
 
-  // ----------------------------- Validation de l'email ---------------------------------------------
+inputEmail.addEventListener("change", function () {
+  validEmail(this);
+});
 
-  inputEmail.addEventListener("change", function () {
-    validEmail(this);
-  });
+const validEmail = function (inputEmail) {
+  // création de la Regexp pour la validation email
 
-  const validEmail = function (inputEmail) {
-    // création de la Regexp pour la validation email
+  let emailRegExp = /^[\w-\.]+@([\w-]+\.)+[a-z]{2,4}$/g;
 
-    let emailRegExp = /^[\w-\.]+@([\w-]+\.)+[a-z]{2,4}$/g;
-    let testEmail = emailRegExp.test(inputEmail.value);
-    let emailErrorMsg = document.getElementById("emailErrorMsg");
+  let emailErrorMsg = document.getElementById("emailErrorMsg");
 
-    if (testEmail) {
-      emailErrorMsg.textContent = "";
-    } else {
-      emailErrorMsg.textContent = "Attention l'email n'est pas valide";
-      errorCount++;
-    }
-  };
-}
+  if (emailRegExp.test(inputEmail.value)) {
+    emailErrorMsg.textContent = "";
+    return true;
+  } else {
+    emailErrorMsg.textContent = "Attention l'email n'est pas valide";
+    return false;
+  }
+};
 
 // -------------------------- Envoie du formulaire au serveur ------------------------------
 
@@ -309,7 +303,15 @@ function submitForm() {
       !inputEmail.value
     ) {
       alert("Veuillez remplir tous les champs du formulaire");
-    } else {
+    }
+
+    if (
+      validFirstName(inputFirstName) &&
+      validLastName(inputLastName) &&
+      validAddress(inputAddress) &&
+      validCity(inputCity) &&
+      validEmail(inputEmail)
+    ) {
       const order = requestContact();
 
       fetch("http://localhost:3000/api/products/order", {
@@ -322,15 +324,14 @@ function submitForm() {
         .then((res) => res.json())
         .then((data) => {
           const orderId = data.orderId;
-          // window.location.href = `./confirmation.html?orderId=${orderId}`;
-          // localStorage.removeItem("data");
+          window.location.href = `./confirmation.html?orderId=${orderId}`;
+          localStorage.removeItem("data");
         })
         .catch((error) => {
           alert("Un problème est survenu");
         });
     }
   });
-  console.log(errorCount);
 }
 
 function requestContact() {
