@@ -143,7 +143,6 @@ function removeItem(e) {
   const articleId = article.dataset.id;
   const articleColor = article.dataset.color;
 
-  // let selectIdRemove = items[k].id;
   for (item of items) {
     items = items.filter(
       (item) => item.color != articleColor,
