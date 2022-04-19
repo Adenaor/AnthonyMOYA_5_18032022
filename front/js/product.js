@@ -78,7 +78,7 @@ function addToCard() {
     ) {
       let articleAdd = {
         id: articleId,
-        price: price.textContent,
+
         title: title.textContent,
         quantity: quantityChoise,
         color: colorChoise,

@@ -14,6 +14,13 @@ if (items === null) {
 
   let cart = [];
   for (item of items) {
+    let displayItemPrice = itemPrice(item.id);
+
+    const displayPrice = Promise.resolve(displayItemPrice);
+    displayPrice.then((value) => {
+      let itemPrice = value;
+    });
+
     cart += `
             <article
                
@@ -75,15 +82,33 @@ function displayQuantityAndPrice() {
   let totalPrice = 0;
 
   for (let item of items) {
-    let quantity = item.quantity;
-    let price = Number(quantity) * Number(item.price);
+    displayItemPrice = itemPrice(item.id);
 
-    totalQuantity += Number(quantity);
-    totalPrice += Number(price);
+    const displayTotalPrice = Promise.resolve(displayItemPrice);
+    displayTotalPrice.then((value) => {
+      let quantity = item.quantity;
+      let price = Number(quantity) * value;
 
-    quantityBasket.textContent = totalQuantity;
-    priceBasket.textContent = totalPrice;
+      totalQuantity += Number(quantity);
+      totalPrice += Number(price);
+
+      quantityBasket.textContent = totalQuantity;
+      priceBasket.textContent = totalPrice;
+    });
   }
+}
+
+function itemPrice(id) {
+  return fetch(`http://localhost:3000/api/products/${id}`)
+    .then((res) => {
+      return res.json();
+    })
+    .then((article) => {
+      return article.price;
+    })
+    .catch((error) => {
+      alert("Un problème est survenu.");
+    });
 }
 
 // ------------------------- Modifier la quantité et du prix ---------------------------------
@@ -124,15 +149,17 @@ if (localStorage.length === 0) {
 } else {
   for (k = 0; k < deleteItem.length; k++) {
     deleteItem[k].addEventListener("click", (e) => {
-      window.confirm(
-        `Voulez-vous retirer cet article du panier ? Cliquer sur OK pour confirmer`
-      );
-      removeItem(e);
-      addToItems();
-      displayQuantityAndPrice();
-      removeDisplay(e);
-
-      location.reload();
+      if (
+        window.confirm(
+          `Voulez-vous retirer cet article du panier ? Cliquer sur OK pour confirmer`
+        )
+      ) {
+        removeItem(e);
+        addToItems();
+        displayQuantityAndPrice();
+        removeDisplay(e);
+        location.reload();
+      }
     });
   }
 }
