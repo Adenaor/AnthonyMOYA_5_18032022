@@ -14,12 +14,14 @@ if (items === null) {
 
   let cart = [];
   for (item of items) {
-    let displayItemPrice = itemPrice(item.id);
+    const displayItemPrice = itemPrice(item.id);
 
     const displayPrice = Promise.resolve(displayItemPrice);
     displayPrice.then((value) => {
-      let itemPrice = value;
+      console.log(value);
     });
+
+    console.log(displayPrice);
 
     cart += `
             <article
