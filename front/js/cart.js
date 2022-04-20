@@ -1,67 +1,81 @@
 const cartItems = document.getElementById("cart__items");
 let items = JSON.parse(localStorage.getItem("data"));
-console.log(items);
 
 // --------------------- Afficahge des produits du panier -----------------------
 
 // ---------------------- Si panier vide ----------------------------------------
-let cart = [];
-if (items === null) {
-  emptyCart();
-} else {
-  // --------- Affichage des produits si le panier n'est pas vide ---------------
+const cart = [];
+console.log(cart);
 
-  for (item of items) {
-    cart += `
-            <article
-               
-                class="cart__item"
-                data-id=${item.id}
-                data-color=${item.color} 
-            >
-             
-                <div class="cart__item__img">
-                  <img 
-                    src=${item.img}
-                    alt=${item.alt}
-                  />
-                </div>
-                <div class="cart__item__content">
-                  <div class="cart__item__content__description">
-                  
-                  </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                      <p>Qté :</p>
-                      <input
-                        type="number"
-                        class="itemQuantity"
-                        name="itemQuantity"
-                        min="1"
-                        max="100"
-                        value=${item.quantity}
-                      />
-                    </div>
-                    <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-    `;
+(function getCart() {
+  if (items === null) {
+    emptyCart();
+  } else {
+    // --------- Affichage des produits si le panier n'est pas vide ---------------
+    for (item of items) {
+      cart.push(item);
+
+      displayItem(item);
+    }
   }
+})();
 
-  cartItems.innerHTML = cart;
+function displayItem() {
+  const article = createArticle(item);
+
+  const image = displayImg(item);
+  article.appendChild(image);
+
+  const cartItemContent = createCartItemContent(item);
+  article.appendChild(cartItemContent);
+
+  displayArticle(article);
+}
+
+function createCartItemContent(item) {
+  const cartItemContent = document.createElement("div");
+  cartItemContent.classList.add("card__item__content");
+
   const description = displayDescription(item);
+  cartItemContent.appendChild(description);
+  const settings = displaySettings(item);
+  cartItemContent.appendChild(settings);
+
+  return cartItemContent;
+}
+
+function createArticle(item) {
+  const article = document.createElement("article");
+  article.classList.add("cart__item");
+  article.dataset.id = item.id;
+  article.dataset.color = item.color;
+
+  return article;
+}
+
+function displayArticle(article) {
+  document.getElementById("cart__items").appendChild(article);
+}
+
+function displayImg(item) {
+  const imgDiv = document.createElement("div");
+  imgDiv.classList.add("cart__item__img");
+
+  const img = document.createElement("img");
+  img.src = item.img;
+  img.alt = item.alt;
+
+  imgDiv.appendChild(img);
+
+  return imgDiv;
 }
 
 function displayDescription(item) {
   displayItemPrice = itemPrice(item.id);
   const displayTotalPrice = Promise.resolve(displayItemPrice);
 
-  const divDescription = document.querySelector(
-    ".cart__item__content__description"
-  );
+  const divDescription = document.createElement("div");
+  divDescription.classList.add(".cart__item__content__description");
 
   const title = document.createElement("h2");
   title.textContent = item.title;
@@ -78,6 +92,29 @@ function displayDescription(item) {
   divDescription.appendChild(price);
 
   return divDescription;
+}
+
+function displaySettings() {
+  const settings = document.createElement("div");
+  settings.classList.add("cart__item__content__settings");
+  addQtyToSettings(settings, item);
+  return settings;
+}
+
+function addQtyToSettings(settings, item) {
+  const quantity = document.createElement("div");
+  quantity.classList.add("cart__item__content__settings__quantity");
+  quantity.innerHTML = ` <p>Qté :</p>
+ <input
+   type="number"
+   class="itemQuantity"
+   name="itemQuantity"
+   min="1"
+   max="100"
+   value=${item.quantity}
+ />`;
+
+  settings.appendChild(quantity);
 }
 
 function emptyCart() {
