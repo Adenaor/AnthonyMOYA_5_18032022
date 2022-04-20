@@ -1,28 +1,17 @@
 const cartItems = document.getElementById("cart__items");
 let items = JSON.parse(localStorage.getItem("data"));
+console.log(items);
 
 // --------------------- Afficahge des produits du panier -----------------------
 
 // ---------------------- Si panier vide ----------------------------------------
-const quantityBasket = document.getElementById("totalQuantity");
-const priceBasket = document.getElementById("totalPrice");
-
+let cart = [];
 if (items === null) {
   emptyCart();
 } else {
   // --------- Affichage des produits si le panier n'est pas vide ---------------
 
-  let cart = [];
   for (item of items) {
-    const displayItemPrice = itemPrice(item.id);
-
-    const displayPrice = Promise.resolve(displayItemPrice);
-    displayPrice.then((value) => {
-      console.log(value);
-    });
-
-    console.log(displayPrice);
-
     cart += `
             <article
                
@@ -39,9 +28,7 @@ if (items === null) {
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
-                    <h2>${item.title}</h2>
-                    <p>${item.color}</p>
-                    <p>${item.price} €</p>
+                  
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -63,7 +50,34 @@ if (items === null) {
               </article>
     `;
   }
+
   cartItems.innerHTML = cart;
+  const description = displayDescription(item);
+}
+
+function displayDescription(item) {
+  displayItemPrice = itemPrice(item.id);
+  const displayTotalPrice = Promise.resolve(displayItemPrice);
+
+  const divDescription = document.querySelector(
+    ".cart__item__content__description"
+  );
+
+  const title = document.createElement("h2");
+  title.textContent = item.title;
+  const color = document.createElement("p");
+  color.textContent = item.color;
+
+  const price = document.createElement("p");
+  displayTotalPrice.then((value) => {
+    price.textContent = value + " €";
+  });
+
+  divDescription.appendChild(title);
+  divDescription.appendChild(color);
+  divDescription.appendChild(price);
+
+  return divDescription;
 }
 
 function emptyCart() {
@@ -114,7 +128,8 @@ function itemPrice(id) {
 }
 
 // ------------------------- Modifier la quantité et du prix ---------------------------------
-
+const quantityBasket = document.getElementById("totalQuantity");
+const priceBasket = document.getElementById("totalPrice");
 const itemQuantity = document.querySelectorAll(".itemQuantity");
 
 // // -------------  Modifier quantité et prix-----------
