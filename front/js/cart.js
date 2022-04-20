@@ -98,7 +98,16 @@ function displaySettings() {
   const settings = document.createElement("div");
   settings.classList.add("cart__item__content__settings");
   addQtyToSettings(settings, item);
+  deleteToSettings(settings, item);
   return settings;
+}
+function deleteToSettings(settings, item) {
+  const divDelete = document.createElement("div");
+  divDelete.classList.add("cart__item__content__settings__delete");
+
+  divDelete.innerHTML = `<p class="deleteItem">Supprimer</p>`;
+
+  settings.appendChild(divDelete);
 }
 
 function addQtyToSettings(settings, item) {
