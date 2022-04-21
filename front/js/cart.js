@@ -32,18 +32,6 @@ function displayItem() {
   displayArticle(article);
 }
 
-function createCartItemContent(item) {
-  const cartItemContent = document.createElement("div");
-  cartItemContent.classList.add("card__item__content");
-
-  const description = displayDescription(item);
-  cartItemContent.appendChild(description);
-  const settings = displaySettings(item);
-  cartItemContent.appendChild(settings);
-
-  return cartItemContent;
-}
-
 function createArticle(item) {
   const article = document.createElement("article");
   article.classList.add("cart__item");
@@ -51,6 +39,19 @@ function createArticle(item) {
   article.dataset.color = item.color;
 
   return article;
+}
+
+function createCartItemContent(item) {
+  const cartItemContent = document.createElement("div");
+  cartItemContent.classList.add("card__item__content");
+
+  const description = displayDescription(item);
+  cartItemContent.appendChild(description);
+
+  const settings = displaySettings(item);
+  cartItemContent.appendChild(settings);
+
+  return cartItemContent;
 }
 
 function displayArticle(article) {
@@ -101,29 +102,30 @@ function displaySettings() {
   deleteToSettings(settings, item);
   return settings;
 }
-function deleteToSettings(settings, item) {
+
+function addQtyToSettings(settings, item) {
+  const quantity = document.createElement("div");
+  quantity.classList.add("cart__item__content__settings__quantity");
+  quantity.innerHTML = ` <p>Qté :</p>
+                          <input
+                            type="number"
+                            class="itemQuantity"
+                            name="itemQuantity"
+                            min="1"
+                            max="100"
+                            value=${item.quantity}
+                          />`;
+
+  settings.appendChild(quantity);
+}
+
+function deleteToSettings(settings) {
   const divDelete = document.createElement("div");
   divDelete.classList.add("cart__item__content__settings__delete");
 
   divDelete.innerHTML = `<p class="deleteItem">Supprimer</p>`;
 
   settings.appendChild(divDelete);
-}
-
-function addQtyToSettings(settings, item) {
-  const quantity = document.createElement("div");
-  quantity.classList.add("cart__item__content__settings__quantity");
-  quantity.innerHTML = ` <p>Qté :</p>
- <input
-   type="number"
-   class="itemQuantity"
-   name="itemQuantity"
-   min="1"
-   max="100"
-   value=${item.quantity}
- />`;
-
-  settings.appendChild(quantity);
 }
 
 function emptyCart() {
