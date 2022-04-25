@@ -5,7 +5,6 @@ let items = JSON.parse(localStorage.getItem("data"));
 
 // ---------------------- Si panier vide ----------------------------------------
 const cart = [];
-console.log(cart);
 
 (function getCart() {
   if (items === null) {
@@ -155,7 +154,6 @@ function displayQuantityAndPrice() {
 
       totalQuantity += Number(quantity);
       totalPrice += Number(price);
-
       quantityBasket.textContent = totalQuantity;
       priceBasket.textContent = totalPrice;
     });
@@ -171,7 +169,7 @@ function itemPrice(id) {
       return article.price;
     })
     .catch((error) => {
-      alert("Un problème est survenu.");
+      alert("");
     });
 }
 
@@ -419,7 +417,7 @@ function submitForm() {
           localStorage.removeItem("data");
         })
         .catch((error) => {
-          alert("Un problème est survenu");
+          "";
         });
     }
   });
