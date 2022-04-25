@@ -167,9 +167,6 @@ function itemPrice(id) {
     })
     .then((article) => {
       return article.price;
-    })
-    .catch((error) => {
-      alert("");
     });
 }
 
