@@ -1,6 +1,7 @@
 const cartItems = document.getElementById("cart__items");
+const quantityBasket = document.getElementById("totalQuantity");
+const priceBasket = document.getElementById("totalPrice");
 let items = JSON.parse(localStorage.getItem("data"));
-
 // --------------------- Afficahge des produits du panier -----------------------
 
 // ---------------------- Si panier vide ----------------------------------------
@@ -134,6 +135,7 @@ function emptyCart() {
 }
 
 // ---------- Récupération de la quantité et du prix dans le local storage ----------
+
 if (localStorage.length === 0 || items.length === 0) {
   emptyCart();
 } else {
@@ -171,8 +173,7 @@ function itemPrice(id) {
 }
 
 // ------------------------- Modifier la quantité et du prix ---------------------------------
-const quantityBasket = document.getElementById("totalQuantity");
-const priceBasket = document.getElementById("totalPrice");
+
 const itemQuantity = document.querySelectorAll(".itemQuantity");
 
 // // -------------  Modifier quantité et prix-----------

@@ -89,13 +89,14 @@ function addToCard() {
 
       // --------------- Gestion du LocalStorage -----------------
       //  -------Stocker les données dans le local storage--------
+      //- Convertis les données JSON stockées dans le localStorage en objet JS -
+
+      let dataStorage = JSON.parse(localStorage.getItem("data"));
 
       const dataStorageAdd = () => {
         dataStorage.push(articleAdd);
         localStorage.data = JSON.stringify(dataStorage);
       };
-
-      let dataStorage = JSON.parse(localStorage.getItem("data"));
 
       newQuantity = () => {
         for (i = 0; i < dataStorage.length; i++) {
@@ -124,8 +125,6 @@ function addToCard() {
           }
         }
       };
-
-      //- Convertis les données JSON stockées dans le localStorage en objet JS -
 
       //-------------  Si produits déjà présents dans le localStorage --------
       if (dataStorage) {
