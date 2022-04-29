@@ -29,11 +29,12 @@ function getArticles() {
 // apparition de chaque article
 
 function displayArticle(article) {
-  items.innerHTML += ` <a href=./product.html?id=${article._id}>
-  <article>
-    <img src=${article.imageUrl} alt=${article.altTxt}>
-    <h3 class="productName">${article.name}</h3>
-    <p class="productDescription">${article.description}</p>
-  </article>
+  items.innerHTML += `
+<a href=./product.html?id=${article._id}>
+   <article>
+     <img src=${article.imageUrl} alt=${article.altTxt}>
+     <h3 class="productName">${article.name}</h3>
+     <p class="productDescription">${article.description}</p>
+   </article>
 </a> `;
 }

@@ -397,7 +397,8 @@ function submitForm() {
       validLastName(inputLastName) &&
       validAddress(inputAddress) &&
       validCity(inputCity) &&
-      validEmail(inputEmail)
+      validEmail(inputEmail) &&
+      items.length != 0
     ) {
       const order = requestContact();
 
